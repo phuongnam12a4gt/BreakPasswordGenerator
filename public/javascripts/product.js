@@ -1,13 +1,40 @@
 const endpointlowercase = 'http://localhost:8080/lowercase';
+const endpointnumber='http://localhost:8080/number';
+const endpointuppercase='http://localhost:8080/uppercase';
+const endpointsymbol='http://localhost:8080/symbol';
 let LOWERCASE_CHAR_CODES=[];
+let NUMBER_CHAR_CODES=[];
+let UPPERCASE_CHAR_CODES=[];
+let SYMBOL_CHAR_CODES=[];
 fetch(endpointlowercase).then((response) => response.json()).then((data) => handleData(data));
 function handleData(data)
 {
-//var upp=data[0].char
-//var low=data[1].char
-//var num=data[2].char
 for (let i = 0; i < data.length; i++){
   LOWERCASE_CHAR_CODES.push(data[i].char);
+}
+}
+
+fetch(endpointnumber).then((response) => response.json()).then((data) => handleData1(data));
+function handleData1(data)
+{
+for (let i = 0; i < data.length; i++){
+  NUMBER_CHAR_CODES.push(data[i].number);
+}
+}
+
+fetch(endpointuppercase).then((response) => response.json()).then((data) => handleData2(data));
+function handleData2(data)
+{
+for (let i = 0; i < data.length; i++){
+  UPPERCASE_CHAR_CODES.push(data[i].char);
+}
+}
+
+fetch(endpointsymbol).then((response) => response.json()).then((data) => handleData3(data));
+function handleData3(data)
+{
+for (let i = 0; i < data.length; i++){
+  SYMBOL_CHAR_CODES.push(data[i].char);
 }
 }
 const characterAmountRange = document.getElementById('characterAmountRange')
@@ -18,16 +45,16 @@ const includeSymbolsElement = document.getElementById('includeSymbols')
 const form = document.getElementById('passwordGeneratorForm')
 const passwordDisplay = document.getElementById('passwordDisplay')
 const strong = document.getElementById('strong')
-const UPPERCASE_CHAR_CODES = arrayFromLowToHigh(65, 90)
+//const UPPERCASE_CHAR_CODES = arrayFromLowToHigh(65, 90)
 //const LOWERCASE_CHAR_CODES = arrayFromLowToHigh(97, 122)
-const NUMBER_CHAR_CODES = arrayFromLowToHigh(48, 57)
-const SYMBOL_CHAR_CODES = arrayFromLowToHigh(33, 47).concat(
-arrayFromLowToHigh(58, 64)
-).concat(
-  arrayFromLowToHigh(91, 96)
-).concat(
-  arrayFromLowToHigh(123, 126)
-)
+//const NUMBER_CHAR_CODES = arrayFromLowToHigh(48, 57)
+//const SYMBOL_CHAR_CODES = arrayFromLowToHigh(33, 47).concat(
+//arrayFromLowToHigh(58, 64)
+//).concat(
+ // arrayFromLowToHigh(91, 96)
+//).concat(
+  //arrayFromLowToHigh(123, 126)
+//)
 characterAmountNumber.addEventListener('input', syncCharacterAmount)
 characterAmountRange.addEventListener('input', syncCharacterAmount)
 
@@ -51,7 +78,6 @@ form.addEventListener('submit', e => {
 
 function generatePassword(characterAmount, includeUppercase, includeNumbers, includeSymbols) {
   let charCodes = LOWERCASE_CHAR_CODES
-  console.log(charCodes)
   if (includeUppercase) charCodes = charCodes.concat(UPPERCASE_CHAR_CODES)
   if (includeSymbols) charCodes = charCodes.concat(SYMBOL_CHAR_CODES)
   if (includeNumbers) charCodes = charCodes.concat(NUMBER_CHAR_CODES)
